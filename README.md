@@ -8,7 +8,11 @@ The simplest and useful Web Component wrapper for [Apache Echarts](https://githu
 - DOM element size watcher is  [size-sensor](https://github.com/hustcc/size-sensor)
 - Deep equal comparison provided by  [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal/)
 
-### [DEMO]()
+### DEMO
+There is a demo web component, please run dev server to have a look
+```bash
+npm run dev
+```
 ### Install
 
 Once you've cloned the repo, run the following command.
