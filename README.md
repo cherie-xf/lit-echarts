@@ -8,6 +8,7 @@ The simplest and useful Web Component wrapper for [Apache Echarts](https://githu
 - DOM element size watcher is  [size-sensor](https://github.com/hustcc/size-sensor)
 - Deep equal comparison provided by  [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal/)
 
+### [DEMO]()
 ### Install
 
 Once you've cloned the repo, run the following command.
@@ -42,6 +43,7 @@ npm run build
 | `loadingOption`   | Object    | configuration item of loading animation |
 | `opts`            | Object    | Initialize chart Instance chart configurationsLines in loaded buffers. Please refer to [configuration details](https://echarts.apache.org/en/api.html#echarts.init)|
 | `onEvents`        | Object    |  Binding events {eventName: handleFuntion}|
+| `onChartReady`    | Function  |  Call back function after chart init with echarts instance as param|
 
 ## Resize
 Chart watch dom size changing by bind with [size-sensor](https://github.com/hustcc/size-sensor) to resize itself
@@ -180,173 +182,6 @@ Show loading animation
 </script>
 <style>
   #loading-chart{
-    width: 800px;
-    height: 400px;
-  }
-</style>
-```
-### Option Merge
-post re-set option like wating for data is ready, option will merge with old option if noMerge is false.
-also can replaceMerge part of root properties in option
-```html preview
-<button id="data-button"> Set Data</button>
-<button id="bar-type-button"> Set Bar Type</button>
-<button id="line-type-button"> Set Line Type</button>
-<button id="mix-type-button"> Set Mix Type</button>
-<button id="toggle-decal-button"> Toggle Decal Pattern</button>
-<lit-echarts id="merge-chart"></lit-echarts>
-<script>
-  const option = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        // data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
-        smooth: true
-    }]
-  };
-  const dom = document.querySelector('#merge-chart');
-  const dataBtnDom = document.querySelector('#data-button');
-  const lineBtnDom = document.querySelector('#line-type-button');
-  const barBtnDom = document.querySelector('#bar-type-button');
-  const mixBtnDom = document.querySelector('#mix-type-button');
-  const decalBtnDom = document.querySelector('#toggle-decal-button');
-  let showDecal = false;
-  const getData = ()=> [...Array(7)].map(_=>Math.ceil(Math.random()*100));
-  dom.option = option;
-  dataBtnDom.addEventListener('click', (e) => {
-    const data = getData();
-    if(dom.replaceMerge === 'series'){
-      dom.option = {
-          series: [
-          {data: data, type: 'line', smooth: true},
-        ]
-      }
-    } else {
-      // when data is ready, only specify the data, will merge with old series configs
-      dom.option = {
-          series: [
-          {data: data},
-        ]
-      }
-    }
-  });
-  lineBtnDom.addEventListener('click', (e) => {
-    const data1 = getData();
-    const data2 = getData();
-    dom.replaceMerge = 'series'
-    dom.option = {
-        series: [
-        {name: 'line1', type: 'line', data: data1, smooth: true},
-        {name: 'line2', type: 'line', data: data2, smooth: true},
-       ]
-    }
-  });
-  barBtnDom.addEventListener('click', (e) => {
-    const data1 = getData();
-    const data2 = getData();
-    dom.replaceMerge = 'series'
-    dom.option = {
-        series: [
-        {name: 'bar1', type: 'bar', data: data1},
-        {name: 'bar2', type: 'bar', data: data2},
-       ]
-    }
-  });
-  mixBtnDom.addEventListener('click', (e) => {
-    const data1 = getData();
-    const data2 = getData();
-    const data3 = getData();
-    dom.replaceMerge = 'series'
-    dom.option = {
-        series: [
-        {name: 'bar1', type: 'bar', data: data1},
-        {name: 'bar2', type: 'bar', data: data2},
-        {name: 'line3', type: 'line', data: data3, smooth: true},
-       ]
-    }
-  });
-  decalBtnDom.addEventListener('click', (e) => {
-    dom.replaceMerge = 'aria'
-    dom.option = {
-      aria:{
-        enabled: showDecal,
-        decal:{
-            show: true
-        }
-      },
-    }
-    showDecal = !showDecal
-  });
-
-</script>
-<style>
-  #merge-chart{
-    width: 800px;
-    height: 400px;
-  }
-</style>
-```
-### Custom Event
-Listen to chart-ready custom events
-```html preview
-<lit-echarts id="event-chart"></lit-echarts>
-<script>
-  // specify chart configuration item and data
-  const dom = document.querySelector('#event-chart');
-  const option = {
-    dataset: {
-      source: [
-          ['score', 'amount', 'product'],
-          [89.3, 58212, 'Matcha Latte'],
-          [57.1, 78254, 'Milk Tea'],
-          [74.4, 41032, 'Cheese Cocoa'],
-          [50.1, 12755, 'Cheese Brownie'],
-          [89.7, 20145, 'Matcha Cocoa'],
-          [68.1, 79146, 'Tea'],
-          [19.6, 91852, 'Orange Juice'],
-          [10.6, 101852, 'Lemon Juice'],
-          [32.7, 20112, 'Walnut Brownie']
-      ]
-    },
-    grid: {containLabel: true},
-    xAxis: {name: 'amount'},
-    yAxis: {type: 'category'},
-    visualMap: {
-        orient: 'horizontal',
-        left: 'center',
-        min: 10,
-        max: 100,
-        text: ['High Score', 'Low Score'],
-        dimension: 0,
-        inRange: {
-            color: ['#65B581', '#FFCE34', '#FD665F']
-        }
-    },
-    series: [
-        {
-            type: 'bar',
-            encode: {
-                x: 'amount',
-                y: 'product'
-            }
-        }
-    ]
-  };
-  dom.onChartReady = function(chart) {
-    console.log('chart-ready', chart)
-    alert('chart is ready');
-  }
-  dom.option = option;
-  dom.onEvents = events;
-</script>
-<style>
-  #event-chart{
     width: 800px;
     height: 400px;
   }
