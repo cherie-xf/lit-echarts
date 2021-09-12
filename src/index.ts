@@ -1,6 +1,9 @@
 import { customElement, LitElement, css, html, property } from "lit-element";
 import "./elements";
 
+interface ChartOption extends echarts.EChartOption {
+  notMerge?: boolean;
+}
 @customElement("lit-echarts-demo")
 export default class LitEChartsDemo extends LitElement {
   static styles = css`
@@ -38,7 +41,7 @@ export default class LitEChartsDemo extends LitElement {
         type: "line"
       }
     ]
-  } as echarts.EChartOption;
+  } as ChartOption;
   render() {
     const loadingOption = {
       text: "my chart is loading...",
@@ -137,9 +140,9 @@ export default class LitEChartsDemo extends LitElement {
               data: [150, 230, 224, 218, 135, 147, 260],
               type: "line"
             }
-          ]
+          ],
+          notMerge: true,
         };
-        this.notMerge = true;
       }
     };
     return html`

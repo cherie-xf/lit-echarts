@@ -18,7 +18,7 @@ interface ChartOption extends EChartOption {
 }
 
 /**
- * An example element.
+ * lit-echarts.
  *
  */
 @customElement("lit-echarts")

@@ -20,6 +20,9 @@ Once you've cloned the repo, run the following command.
 ```bash
 npm install
 ```
+#### `echarts` is the peerDependence of `lit-echarts`, you can install echarts with your own version.
+$ npm install --save echarts
+
 ### Start Dev Server
 
 To spin up the dev server
@@ -48,6 +51,7 @@ npm run build
 | `opts`            | Object    | Initialize chart Instance chart configurationsLines in loaded buffers. Please refer to [configuration details](https://echarts.apache.org/en/api.html#echarts.init)|
 | `onEvents`        | Object    |  Binding events {eventName: handleFuntion}|
 | `onChartReady`    | Function  |  Call back function after chart init with echarts instance as param|
+| `noData`    | Boolean  |  states whether show "No Data" title |
 
 ## Resize
 Chart watch dom size changing by bind with [size-sensor](https://github.com/hustcc/size-sensor) to resize itself
