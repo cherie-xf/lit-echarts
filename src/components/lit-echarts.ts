@@ -26,6 +26,7 @@ export default class LitECharts extends LitElement {
   static styles = css`
     :host {
       display: block;
+      height: 100%;
     }
     .chart {
       width: 100%;
