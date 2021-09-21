@@ -162,6 +162,8 @@ export default class LitECharts extends LitElement {
       echartInstance.hideLoading();
       if (this.noData) {
         this.showNoData();
+      } else {
+        this.hideNoData();
       }
     }
     return echartInstance;
@@ -184,6 +186,21 @@ export default class LitECharts extends LitElement {
         },
         { notMerge: true }
       );
+    }
+  }
+  private hideNoData(): void {
+    const echartsInstance = this.getEchartsInstance();
+    if (echartsInstance) {
+      let ov = echartsInstance.getOption();
+      if (ov.title && Array.isArray(ov.title)) {
+        if (ov.title.some(t => t.subtext === "No Data")) {
+          ov.title = ov.title.filter(t => t.subtext !== "No Data");
+          echartsInstance.setOption(ov);
+        }
+      } else if (ov.title?.subtext === "No Data") {
+        ov.title.subtext = "";
+        echartsInstance.setOption(ov);
+      }
     }
   }
 
