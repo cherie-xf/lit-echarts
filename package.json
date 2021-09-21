@@ -23,12 +23,13 @@
     "size-sensor": "^1.0.1"
   },
   "devDependencies": {
-    "@types/echarts": "^4.9.8",
+    "echarts": "^5.1.2",
+    "@types/echarts": "^4.9.10",
     "typescript": "^4.3.2",
     "vite": "^2.3.8"
   },
   "peerDependencies": {
-    "echarts": "^5.1,2"
+    "echarts": "^5.1.2"
   },
   "repository": {
     "type": "git",
