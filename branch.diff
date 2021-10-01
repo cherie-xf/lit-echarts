@@ -1,0 +1,92 @@
+diff --git a/README.md b/README.md
+index 8739000..41e176f 100644
+--- a/README.md
++++ b/README.md
+@@ -20,6 +20,9 @@ Once you've cloned the repo, run the following command.
+ ```bash
+ npm install
+ ```
++#### `echarts` is the peerDependence of `lit-echarts`, you can install echarts with your own version.
++$ npm install --save echarts
++
+ ### Start Dev Server
+
+ To spin up the dev server
+@@ -48,6 +51,7 @@ npm run build
+ | `opts`            | Object    | Initialize chart Instance chart configurationsLines in loaded buffers. Please refer to [configuration details](https://echarts.apache.org/en/api.html#echarts.init)|
+ | `onEvents`        | Object    |  Binding events {eventName: handleFuntion}|
+ | `onChartReady`    | Function  |  Call back function after chart init with echarts instance as param|
++| `noData`    | Boolean  |  states whether show "No Data" title |
+
+ ## Resize
+ Chart watch dom size changing by bind with [size-sensor](https://github.com/hustcc/size-sensor) to resize itself
+diff --git a/src/components/lit-echarts.ts b/src/components/lit-echarts.ts
+index de1489a..be2ee45 100644
+--- a/src/components/lit-echarts.ts
++++ b/src/components/lit-echarts.ts
+@@ -18,7 +18,7 @@ interface ChartOption extends EChartOption {
+ }
+
+ /**
+- * An example element.
++ * lit-echarts.
+  *
+  */
+ @customElement("lit-echarts")
+@@ -26,6 +26,7 @@ export default class LitECharts extends LitElement {
+   static styles = css`
+     :host {
+       display: block;
++      height: 100%;
+     }
+     .chart {
+       width: 100%;
+diff --git a/src/index.ts b/src/index.ts
+index b2db714..6cbcaee 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,6 +1,9 @@
+ import { customElement, LitElement, css, html, property } from "lit-element";
+ import "./elements";
+
++interface ChartOption extends echarts.EChartOption {
++  notMerge?: boolean;
++}
+ @customElement("lit-echarts-demo")
+ export default class LitEChartsDemo extends LitElement {
+   static styles = css`
+@@ -38,7 +41,7 @@ export default class LitEChartsDemo extends LitElement {
+         type: "line"
+       }
+     ]
+-  } as echarts.EChartOption;
++  } as ChartOption;
+   render() {
+     const loadingOption = {
+       text: "my chart is loading...",
+@@ -137,9 +140,9 @@ export default class LitEChartsDemo extends LitElement {
+               data: [150, 230, 224, 218, 135, 147, 260],
+               type: "line"
+             }
+-          ]
++          ],
++          notMerge: true,
+         };
+-        this.notMerge = true;
+       }
+     };
+     return html`
+diff --git a/vite.config.ts b/vite.config.ts
+index e31f0d8..4ff6fe7 100644
+--- a/vite.config.ts
++++ b/vite.config.ts
+@@ -4,7 +4,8 @@ import { defineConfig } from 'vite'
+ export default defineConfig({
+   build: {
+     lib: {
+-      entry: 'src/index.ts',
++      // entry: 'src/index.ts',
++      entry: 'src/elements.ts',
+       formats: ['es']
+     },
+     rollupOptions: {

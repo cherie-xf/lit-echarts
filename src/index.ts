@@ -24,7 +24,7 @@ export default class LitEChartsDemo extends LitElement {
   @property({ type: Boolean, reflect: true }) showNoData = false;
   @property({ type: Boolean, reflect: true }) showDecal = false;
   @property({ type: Boolean, reflect: true }) notMerge = false;
-  @property({ type: String, reflect: true }) theme = "";
+  @property({ type: String, reflect: true }) theme = "dark";
   @property({ reflect: true }) replaceMerge = "series";
   @property({ type: Object, reflect: true })
   option = {
@@ -175,6 +175,7 @@ export default class LitEChartsDemo extends LitElement {
         .loadingOption=${loadingOption}
         .showLoading=${this.showLoading}
         .noData=${this.showNoData}
+        .theme=${this.theme}
       ></lit-echarts>
     `;
   }

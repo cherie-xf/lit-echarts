@@ -8,11 +8,13 @@ import {
   PropertyValues
 } from "lit-element";
 
-import * as echarts from "echarts";
+import * as initEcharts from "echarts";
+import * as theme from '../themes/themes'
 import { bind, clear } from "size-sensor";
 import isEqual from "fast-deep-equal";
 import { ChartReadyPayload } from "./chart.types";
 import { EChartOption } from "echarts";
+const echarts = theme.initTheme(initEcharts);
 interface ChartOption extends EChartOption {
   notMerge?: boolean;
 }

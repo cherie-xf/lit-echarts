@@ -1,0 +1,100 @@
+diff --git a/package-lock.json b/package-lock.json
+index 685a23e..4ab059e 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,22 +1,22 @@
+ {
+   "name": "@cherie-xf/lit-echarts",
+-  "version": "1.0.1",
++  "version": "1.0.2-alpha.1",
+   "lockfileVersion": 1,
+   "requires": true,
+   "dependencies": {
+     "@types/echarts": {
+-      "version": "4.9.8",
+-      "resolved": "https://registry.npmjs.org/@types/echarts/-/echarts-4.9.8.tgz",
+-      "integrity": "sha512-ViycwegdqQ+cDPgXtcTOklt3L59QfcKraSbUiHJ3KoaOptZQtWs2+hB9NCLN1UerB5i5a6wlUBprtwnNm5qIfQ==",
++      "version": "4.9.10",
++      "resolved": "https://registry.npmjs.org/@types/echarts/-/echarts-4.9.10.tgz",
++      "integrity": "sha512-8xNCE5d+hUU5hZJxmxvngkkODIh19jQXpZ4X9EgfXkyyejGitm7lYdAssJLtUUEtMDD6C08Z4QPmNoezg7Y97g==",
+       "dev": true,
+       "requires": {
+         "@types/zrender": "*"
+       }
+     },
+     "@types/zrender": {
+-      "version": "4.0.0",
+-      "resolved": "https://registry.npmjs.org/@types/zrender/-/zrender-4.0.0.tgz",
+-      "integrity": "sha512-s89GOIeKFiod2KSqHkfd2rzx+T2DVu7ihZCBEBnhFrzvQPUmzvDSBot9Fi1DfMQm9Odg+rTqoMGC38RvrwJK2w==",
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/@types/zrender/-/zrender-4.0.1.tgz",
++      "integrity": "sha512-IyTRf30jPOXK1+1RChI/78U6aV9hyWYf/vhL96Vt66oDz9es/BDjeKpvbNZSOHVA7zAReOwJcmdZS5AGAqhygw==",
+       "dev": true
+     },
+     "colorette": {
+@@ -25,6 +25,16 @@
+       "integrity": "sha512-MKGMzyfeuutC/ZJ1cba9NqcNpfeqMUcYmyF1ZFY6/Cn7CNSAKx6a+s48sqLqyAiZuaP2TcqMhoo+dlwFnVxT9w==",
+       "dev": true
+     },
++    "echarts": {
++      "version": "5.1.2",
++      "resolved": "https://registry.npmjs.org/echarts/-/echarts-5.1.2.tgz",
++      "integrity": "sha512-okUhO4sw22vwZp+rTPNjd/bvTdpug4K4sHNHyrV8NdAncIX9/AarlolFqtJCAYKGFYhUBNjIWu1EznFrSWTFxg==",
++      "dev": true,
++      "requires": {
++        "tslib": "2.0.3",
++        "zrender": "5.1.1"
++      }
++    },
+     "esbuild": {
+       "version": "0.12.9",
+       "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.12.9.tgz",
+@@ -135,6 +145,12 @@
+       "integrity": "sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==",
+       "dev": true
+     },
++    "tslib": {
++      "version": "2.0.3",
++      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.0.3.tgz",
++      "integrity": "sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==",
++      "dev": true
++    },
+     "typescript": {
+       "version": "4.3.4",
+       "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.3.4.tgz",
+@@ -153,6 +169,15 @@
+         "resolve": "^1.20.0",
+         "rollup": "^2.38.5"
+       }
++    },
++    "zrender": {
++      "version": "5.1.1",
++      "resolved": "https://registry.npmjs.org/zrender/-/zrender-5.1.1.tgz",
++      "integrity": "sha512-oeWlmUZPQdS9f5hK4pV21tHPqA3wgQ7CkKkw7l0CCBgWlJ/FP+lRgLFtUBW6yam4JX8y9CdHJo1o587VVrbcoQ==",
++      "dev": true,
++      "requires": {
++        "tslib": "2.0.3"
++      }
+     }
+   }
+ }
+diff --git a/package.json b/package.json
+index 67e7ffd..7770a4a 100644
+--- a/package.json
++++ b/package.json
+@@ -23,12 +23,13 @@
+     "size-sensor": "^1.0.1"
+   },
+   "devDependencies": {
+-    "@types/echarts": "^4.9.8",
++    "echarts": "^5.1.2",
++    "@types/echarts": "^4.9.10",
+     "typescript": "^4.3.2",
+     "vite": "^2.3.8"
+   },
+   "peerDependencies": {
+-    "echarts": "^5.1,2"
++    "echarts": "^5.1.2"
+   },
+   "repository": {
+     "type": "git",
