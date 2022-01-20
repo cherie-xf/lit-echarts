@@ -6,16 +6,16 @@ import {
   query,
   property,
   PropertyValues
-} from "lit-element";
+} from 'lit-element';
 
-import * as initEcharts from "echarts";
-import * as theme from '../themes/themes'
-import { bind, clear } from "size-sensor";
-import isEqual from "fast-deep-equal";
-import { ChartReadyPayload } from "./chart.types";
-import { EChartOption } from "echarts";
+import * as initEcharts from 'echarts';
+import * as theme from '../themes/themes';
+import { bind, clear } from 'size-sensor';
+import isEqual from 'fast-deep-equal';
+import { ChartReadyPayload } from './chart.types';
+import { EChartsOption } from 'echarts';
 const echarts = theme.initTheme(initEcharts);
-interface ChartOption extends EChartOption {
+interface ChartOption extends EChartsOption {
   notMerge?: boolean;
 }
 
@@ -23,7 +23,7 @@ interface ChartOption extends EChartOption {
  * lit-echarts.
  *
  */
-@customElement("lit-echarts")
+@customElement('lit-echarts')
 export default class LitECharts extends LitElement {
   static styles = css`
     :host {
@@ -35,9 +35,9 @@ export default class LitECharts extends LitElement {
       height: 100%;
     }
   `;
-  @query("[part=\"base\"]") base: HTMLDivElement;
+  @query('[part="base"]') base: HTMLDivElement;
   /** Theme to be */
-  @property({ type: String, reflect: true }) theme = "";
+  @property({ type: String, reflect: true }) theme = '';
   /** Configuration item and data. Please refer to [configuration item manual](https://echarts.apache.org/en/option.html#title) for more information */
   @property({ type: Object }) option = {} as ChartOption;
   /** States whether not to merge with previous option; false by default, means merge.If true, all of the current components will be removed and new components will be created according to the new option */
@@ -50,7 +50,8 @@ export default class LitECharts extends LitElement {
   @property({ type: Boolean, reflect: true }) noData = false;
   /** configuration item of loading animation */
   @property({ type: Object, reflect: true })
-  loadingOption = {} as echarts.EChartsLoadingOption;
+  // loadingOption = {} as echarts.EChartsLoadingOption;
+  loadingOption = {};
   /** Initialize chart Instance chart configurationsLines in loaded buffers. Please refer to [configuration details](https://echarts.apache.org/en/api.html#echarts.init)*/
   @property({ type: Object, reflect: true }) opts = {};
   /** Binding events {eventName: handleFuntion} */
@@ -66,8 +67,8 @@ export default class LitECharts extends LitElement {
 
   updated(properties: PropertyValues) {
     if (
-      properties.has("theme") &&
-      properties.get("theme") !== this.theme &&
+      properties.has('theme') &&
+      properties.get('theme') !== this.theme &&
       this.theme
     ) {
       // this.loadingOption = theme.getLoadingOpt(this.theme);
@@ -75,29 +76,29 @@ export default class LitECharts extends LitElement {
       this.renderNewEchart(); // re-created chart
     }
     if (
-      properties.has("option") &&
-      !isEqual(properties.get("option"), this.option && !this.noData)
+      properties.has('option') &&
+      !isEqual(properties.get('option'), this.option && !this.noData)
     ) {
       this.updateEChartsOption();
     }
     if (
-      properties.has("showLoading") &&
-      properties.get("showLoading") !== this.showLoading &&
+      properties.has('showLoading') &&
+      properties.get('showLoading') !== this.showLoading &&
       this.showLoading !== undefined
     ) {
       this.updateEChartsOption();
     }
     if (
-      properties.has("onEvents") &&
-      !isEqual(properties.get("onEvents"), this.onEvents)
+      properties.has('onEvents') &&
+      !isEqual(properties.get('onEvents'), this.onEvents)
     ) {
       this.dispose();
       this.renderNewEchart(); // re-created chart
     }
-    if (properties.has("noData") && this.noData) {
+    if (properties.has('noData') && this.noData) {
       this.showNoData();
     }
-    if (properties.has("onChartReady")) {
+    if (properties.has('onChartReady')) {
       this.onChartReady(this.getEchartsInstance());
     }
   }
@@ -125,12 +126,12 @@ export default class LitECharts extends LitElement {
     this.bindEvents(echartsInstance, this.onEvents || {});
 
     // 3. on chart ready callback
-    if (typeof this.onChartReady === "function") {
+    if (typeof this.onChartReady === 'function') {
       this.onChartReady(echartsInstance);
     }
 
     // 3. emit chart ready event
-    let event = new CustomEvent("chart-ready", {
+    let event = new CustomEvent('chart-ready', {
       detail: {
         chart: echartsInstance
       } as ChartReadyPayload
@@ -156,10 +157,10 @@ export default class LitECharts extends LitElement {
     echartInstance.setOption(this.option, {
       notMerge: this.notMerge || this.option.notMerge,
       replaceMerge: this.replaceMerge
-    } as echarts.EChartsOptionConfig);
+    });
     // 3. set loading mask
     if (this.showLoading) {
-      echartInstance.showLoading("default", this.loadingOption);
+      echartInstance.showLoading('default', this.loadingOption);
     } else {
       echartInstance.hideLoading();
       if (this.noData) {
@@ -178,9 +179,9 @@ export default class LitECharts extends LitElement {
       echartsInstance.setOption(
         {
           title: {
-            subtext: "No Data",
-            left: "center",
-            top: "center",
+            subtext: 'No Data',
+            left: 'center',
+            top: 'center',
             subtextStyle: {
               fontSize: 20
             }
@@ -190,17 +191,20 @@ export default class LitECharts extends LitElement {
       );
     }
   }
+
   private hideNoData(): void {
     const echartsInstance = this.getEchartsInstance();
     if (echartsInstance) {
       let ov = echartsInstance.getOption();
-      if (ov.title && Array.isArray(ov.title)) {
-        if (ov.title.some(t => t.subtext === "No Data")) {
-          ov.title = ov.title.filter(t => t.subtext !== "No Data");
-          echartsInstance.setOption(ov);
-        }
-      } else if (ov.title?.subtext === "No Data") {
-        ov.title.subtext = "";
+      let title = ov.title as initEcharts.TitleComponentOption;
+      // if (title && Array.isArray(title)) {
+      //   if (title.some(t => t.subtext === 'No Data')) {
+      //     title.filter(t => t.subtext !== 'No Data');
+      //     echartsInstance.setOption(ov);
+      //   }
+      // } else if (title && title?.subtext === 'No Data') {
+      if (title && title?.subtext === 'No Data') {
+        title.subtext = '';
         echartsInstance.setOption(ov);
       }
     }
@@ -208,7 +212,7 @@ export default class LitECharts extends LitElement {
 
   private bindEvents(
     instance: echarts.ECharts,
-    events: Record<string, Function>
+    events: Record<string, (...args: unknown[]) => boolean | void>
   ): void {
     if (instance && events && Object.keys(events).length) {
       Object.keys(events).forEach(eventName => {
@@ -234,6 +238,6 @@ export default class LitECharts extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "lit-echarts": LitECharts;
+    'lit-echarts': LitECharts;
   }
 }

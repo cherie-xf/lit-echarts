@@ -1,10 +1,10 @@
-import { customElement, LitElement, css, html, property } from "lit-element";
-import "./elements";
+import { customElement, LitElement, css, html, property } from 'lit-element';
+import './elements';
 
-interface ChartOption extends echarts.EChartOption {
+interface ChartOption extends echarts.EChartsOption {
   notMerge?: boolean;
 }
-@customElement("lit-echarts-demo")
+@customElement('lit-echarts-demo')
 export default class LitEChartsDemo extends LitElement {
   static styles = css`
     :host {
@@ -24,30 +24,30 @@ export default class LitEChartsDemo extends LitElement {
   @property({ type: Boolean, reflect: true }) showNoData = false;
   @property({ type: Boolean, reflect: true }) showDecal = false;
   @property({ type: Boolean, reflect: true }) notMerge = false;
-  @property({ type: String, reflect: true }) theme = "dark";
-  @property({ reflect: true }) replaceMerge = "series";
+  @property({ type: String, reflect: true }) theme = 'dark';
+  @property({ reflect: true }) replaceMerge = 'series';
   @property({ type: Object, reflect: true })
   option = {
     xAxis: {
-      type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     yAxis: {
-      type: "value"
+      type: 'value'
     },
     series: [
       {
         data: [150, 230, 224, 218, 135, 147, 260],
-        type: "line"
+        type: 'line'
       }
     ]
   } as ChartOption;
   render() {
     const loadingOption = {
-      text: "my chart is loading...",
-      color: "#c23531",
-      textColor: "#333",
-      maskColor: "rgba(255, 255, 255, 1)",
+      text: 'my chart is loading...',
+      color: '#c23531',
+      textColor: '#333',
+      maskColor: 'rgba(255, 255, 255, 1)',
       fontSize: 16,
       showSpinner: true,
       spinnerRadius: 10
@@ -55,28 +55,28 @@ export default class LitEChartsDemo extends LitElement {
     const getData = () =>
       [...Array(7)].map(_ => Math.ceil(Math.random() * 100));
     const toggleShowLoading = () => {
-      console.log("toggle showLoading");
+      console.log('toggle showLoading');
       this.showLoading = !this.showLoading;
     };
     const setBarType = () => {
       const data1 = getData();
       const data2 = getData();
-      this.replaceMerge = "series";
+      this.replaceMerge = 'series';
       this.option = {
         series: [
-          { name: "bar1", type: "bar", data: data1 },
-          { name: "bar2", type: "bar", data: data2 }
+          { name: 'bar1', type: 'bar', data: data1 },
+          { name: 'bar2', type: 'bar', data: data2 }
         ]
       };
     };
     const setLineType = () => {
       const data1 = getData();
       const data2 = getData();
-      this.replaceMerge = "series";
+      this.replaceMerge = 'series';
       this.option = {
         series: [
-          { name: "line1", type: "line", data: data1, smooth: true },
-          { name: "line2", type: "line", data: data2, smooth: true }
+          { name: 'line1', type: 'line', data: data1, smooth: true },
+          { name: 'line2', type: 'line', data: data2, smooth: true }
         ]
       };
     };
@@ -84,43 +84,43 @@ export default class LitEChartsDemo extends LitElement {
       const data1 = getData();
       const data2 = getData();
       const data3 = getData();
-      this.replaceMerge = "series";
+      this.replaceMerge = 'series';
       this.option = {
         series: [
-          { name: "bar1", type: "bar", data: data1 },
-          { name: "bar2", type: "bar", data: data2 },
-          { name: "line3", type: "line", data: data3, smooth: true }
+          { name: 'bar1', type: 'bar', data: data1 },
+          { name: 'bar2', type: 'bar', data: data2 },
+          { name: 'line3', type: 'line', data: data3, smooth: true }
         ]
       };
     };
     const setMonthAxis = () => {
-      this.replaceMerge = "xAxis";
+      this.replaceMerge = 'xAxis';
       this.option = {
         xAxis: {
-          type: "category",
+          type: 'category',
           data: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Spe",
-            "Oct",
-            "Nov",
-            "Dec"
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Spe',
+            'Oct',
+            'Nov',
+            'Dec'
           ]
         }
       };
     };
     const setDayAxis = () => {
-      this.replaceMerge = "xAxis";
+      this.replaceMerge = 'xAxis';
       this.option = {
         xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         }
       };
     };
@@ -129,19 +129,19 @@ export default class LitEChartsDemo extends LitElement {
       if (!this.showNoData) {
         this.option = {
           xAxis: {
-            type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
           },
           yAxis: {
-            type: "value"
+            type: 'value'
           },
           series: [
             {
               data: [150, 230, 224, 218, 135, 147, 260],
-              type: "line"
+              type: 'line'
             }
           ],
-          notMerge: true,
+          notMerge: true
         };
       }
     };
@@ -182,6 +182,6 @@ export default class LitEChartsDemo extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    "lit-echarts-demo": LitEChartsDemo;
+    'lit-echarts-demo': LitEChartsDemo;
   }
 }
