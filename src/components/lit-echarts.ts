@@ -1,12 +1,5 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  query,
-  property,
-  PropertyValues
-} from 'lit-element';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
 
 import * as initEcharts from 'echarts';
 import * as theme from '../themes/themes';
